@@ -14,10 +14,10 @@ gene <- SCTransform(gene, vars.to.regress = "percent.mt", verbose = FALSE)
 library(biomaRt)
 human = useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 mouse = useMart("ensembl", dataset = "mmusculus_gene_ensembl")
+manngenes <- gdata::read.xls('/home-4/rverma6@jhu.edu/muscle_proj/Data/Mann Cell Reports data.xlsx',sheet=1,skip=1)
 genesV2 = getLDS(attributes = c("hgnc_symbol"), filters = "hgnc_symbol", values = manngenes$Gene.names , mart = human, attributesL = c("mgi_symbol"), martL = mouse, uniqueRows=T)
 manngenesmouse <- (genesV2[, 2])
 length(unique(manngenes$Gene.names));length(manngenesmouse)
-manngenes <- gdata::read.xls('/home-4/rverma6@jhu.edu/muscle_proj/Data/Mann Cell Reports data.xlsx',sheet=1,skip=1)
 manngenes$Ratio.of.slow.to.fast[-c(1:4)] <- log(manngenes$Ratio.of.slow.to.fast[-c(1:4)])#log transform all those values
 manngeneadj <- manngenes$Ratio.of.slow.to.fast[-c(1:4)]
 cutoffgenes <- c(c(1:4),which(manngeneadj<mean(manngeneadj)-1*sd(manngeneadj)),which(manngeneadj>mean(manngeneadj)+1*sd(manngeneadj)))
