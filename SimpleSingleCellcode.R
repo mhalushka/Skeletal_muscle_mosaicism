@@ -63,8 +63,6 @@ plotExpression(sce, features=rownames(var.out)[chosen.genes]) + fontsize
 
 
 chosen.genesx <- rownames(sce)[order(var.out$bio, decreasing=TRUE)[1:3000]]
-goal <- read.csv('~/Downloads/top3kchosengenesSCEpkg.csv')
-sum(chosen.genesx %in%  goal$x)
 write.csv(chosen.genesx,file='newscegenes.csv')
 
 # library(scran)
